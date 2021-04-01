@@ -24,17 +24,11 @@ data_generator = ImageDataGenerator(
                         zoom_range=.1,
                         horizontal_flip=True)
 
-# model parameters/compilation
 model = MiniXception(input_shape, num_classes)
 model.compile(optimizer='adam', loss='categorical_crossentropy',
               metrics=['accuracy'])
 model.summary()
 
-
-
-
-
-    # callbacks
 early_stop = EarlyStopping('val_loss', patience=patience)
 reduce_lr = ReduceLROnPlateau('val_loss', factor=0.1,
                                   patience=int(patience/4), verbose=1)
@@ -44,7 +38,6 @@ model_checkpoint = ModelCheckpoint(model_names, 'val_loss', verbose=1,
                                                     save_best_only=True)
 callbacks = [model_checkpoint, early_stop, reduce_lr]
 
-# loading dataset
 faces, emotions = load_data()
 faces = preprocess_input(faces)
 num_samples, num_classes = emotions.shape

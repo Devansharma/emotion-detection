@@ -43,3 +43,13 @@ def simple_CNN(input_shape, num_classes):
     model.add(GlobalAveragePooling2D())
     model.add(Activation('softmax', name='Predictions'))
     return model
+
+
+
+
+if __name__ == "__main__":
+    input_shape = (64,64,1)
+    num_classes = 7
+
+    model = simple_CNN((48, 48, 1), num_classes)
+    model.summary()

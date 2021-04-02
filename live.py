@@ -4,6 +4,7 @@ import cv2
 from keras.models import load_model
 import numpy as np
 
+
 detection_model_path = r'D:\Projects\emotion-detection\haarcascade_files\haarcascade_frontalface_default.xml'
 emotion_model_path = r'D:\Projects\emotion-detection\models\_mini_XCEPTION.102-0.66.hdf5'
 

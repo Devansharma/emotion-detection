@@ -1,8 +1,19 @@
 from flask import Flask, render_template, Response
+from keras.preprocessing.image import img_to_array
+import imutils
 import cv2
+from keras.models import load_model
+import numpy as np
 
 app = Flask(__name__)
 camera = cv2.VideoCapture(0)
+
+detection_model_path = r'D:\Projects\emotion-detection\haarcascade_files\haarcascade_frontalface_default.xml'
+emotion_model_path = r'D:\Projects\emotion-detection\models\_mini_XCEPTION.102-0.66.hdf5'
+
+face_detection = cv2.CascadeClassifier(detection_model_path)
+emotion_classifier = load_model(emotion_model_path, compile=False)
+EMOTIONS = ["angry" ,"disgust","scared", "happy", "sad", "surprised", "neutral"]
 
 def gen_frames():
     while True:
@@ -51,12 +62,13 @@ def gen_frames():
 
 @app.route('/')
 def index():
-    render_template('index.html')
+    return render_template('index.html')
 
-@app.route('video_feed')
+@app.route('/video_feed')
 def video_feed():
     return Response(gen_frames(), mimetype='multipart/x-mixed-replace; boundary=frame')
 
-    
+if __name__=="__main__":
+    app.run(debug=True)
 
 
